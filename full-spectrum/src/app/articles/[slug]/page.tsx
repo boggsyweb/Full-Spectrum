@@ -1,11 +1,10 @@
-import { BlogItem } from "@/app/types";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { createClient } from "contentful";
+// Blog page
 
-const client = createClient({
-  space: process.env.SPACE_ID,
-  accessToken: process.env.ACCESS_TOKEN,
-});
+import { BlogItem } from "@/lib/types";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { contentfulClient } from "@/lib/functions";
+
+const client = contentfulClient;
 
 type BlogPageProps = {
   params: {
@@ -38,14 +37,18 @@ export default async function BlogPage(props: BlogPageProps) {
   const { params } = props;
   const { slug } = params;
   const article = await fetchBlogPost(slug);
-  const { title, date, content } = article.fields;
+  const { title, date, content, image } = article.fields;
 
   return (
-    <main className="min-h-screen p-24 flex justify-center">
-      <div className="max-w-2xl">
+    <main className="flex flex-col items-center min-h-screen py-12 gap-y-12">
+      <article className="flex flex-col items-center leading-loose bg-white dark:bg-[#201C35] p-6 md:p-10 rounded-sm shadow-[4px_4px_5px_0px_rgba(0,0,0,0.1)] dark:shadow-[5px_5px_5px_0px_rgba(0,0,0,0.3)] sm:w-3/4">
         <h1 className="font-extrabold text-3xl mb-2">{title}</h1>
-
-        <p className="mb-6 text-slate-400 ">
+        <img
+            src={`https:${image.fields.file.url}`}
+            alt={title}
+            className="w-full" 
+          />
+        <p className="mb-6 opacity-70 ">
           Posted on{" "}
           {new Date(date).toLocaleDateString("en-US", {
             year: "numeric",
@@ -56,7 +59,7 @@ export default async function BlogPage(props: BlogPageProps) {
         <div className="[&>p]:mb-8 [&>h2]:font-extrabold">
           {documentToReactComponents(content)}
         </div>
-      </div>
+      </article>
     </main>
   );
 }

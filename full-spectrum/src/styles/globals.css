@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: #454360;
+  --background: #F9F9FE;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: #F9F9FE;
+    --background: #181528; 
+  }
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Gabarito', sans-serif;
+  line-height: 1.5;
+  color: var(--foreground);
+  background: var(--background);
+}
