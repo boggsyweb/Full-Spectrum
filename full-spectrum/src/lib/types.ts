@@ -42,5 +42,6 @@ export type BlogItem = {
 export type BlogItems = ReadonlyArray<BlogItem>;
 
 export type BlogQueryResult = {
+  fields: any;
   items: BlogItems;
 };

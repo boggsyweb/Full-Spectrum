@@ -1,7 +1,7 @@
 // Static pages
 import { PageItem } from "@/lib/types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { contentfulClient } from "@/lib/functions";
+import { contentfulClient } from "@/lib/createClient";
 
 const client = contentfulClient;
 
@@ -29,7 +29,7 @@ export async function generateStaticParams() {
             "fields.slug[match]": slug,
     };
     const queryResult = await client.getEntries(queryOptions);
-    return queryResult.items[0];
+    return queryResult.items[0] as unknown as PageItem;
 };
 export default async function BlogPage(props: PageProps) {
     const { params } = props;
@@ -41,7 +41,7 @@ export default async function BlogPage(props: PageProps) {
         <main className="flex items-center min-h-screen flex-col py-12 gap-y-12">
           <article className="flex flex-col items-center leading-loose bg-white dark:bg-[#201C35] p-6 md:p-10 rounded-sm shadow-[4px_4px_5px_0px_rgba(0,0,0,0.1)] dark:shadow-[5px_5px_5px_0px_rgba(0,0,0,0.3)] sm:w-3/4">
             <h1 className="font-extrabold text-3xl mb-4">{title}</h1>
-            <div className="[&>p]:mb-8 [&>h2]:font-extrabold">
+            <div className="[&>p]:mb-8 [&>p]:text-[#5f5e7a] dark:[&>p]:text-[#b6b6cc] [&>h2]:font-extrabold">
               {documentToReactComponents(body)}
             </div>
             <img

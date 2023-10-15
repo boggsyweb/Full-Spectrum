@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { BlogQueryResult } from "../lib/types";
-import { contentfulClient } from "@/lib/functions";
+import { contentfulClient } from "@/lib/createClient";
 import { renderTags, getAllTags } from "@/app/functions/tagFunction";
 
 const client = contentfulClient;
 
+
 const getBlogEntries = async (): Promise<BlogQueryResult> => {
     const entries = await client.getEntries({ content_type: "blog", order: ['-fields.date'] });
-    return entries;
+    return entries as unknown as BlogQueryResult;
   }
   
   export default async function Aside() {
@@ -49,9 +50,9 @@ const getBlogEntries = async (): Promise<BlogQueryResult> => {
             </span>
             <ul className="grid grid-cols-3 gap-1 justify-items-center">
               {allTags.map((tag, index) => (
-                  <li key={index}>
-                  {renderTags([tag])}
-                </li>
+                        <li key={index}>
+                        {renderTags([tag])}
+                      </li>
               ))}
             </ul>
         </div>

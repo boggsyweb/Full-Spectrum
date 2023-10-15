@@ -1,10 +1,22 @@
-// Blog page
-
+// Blog post
 import { BlogItem } from "@/lib/types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { contentfulClient } from "@/lib/functions";
+import { contentfulClient } from "@/lib/createClient";
 
 const client = contentfulClient;
+
+const options = {
+  renderNode: {
+
+    "hyperlink": (node: any) => {
+      return (
+        <a href={node.data.uri} target="_blank" rel="noopener noreferrer">
+          {node.content[0].value}
+        </a>
+      );
+    },
+  },
+};
 
 type BlogPageProps = {
   params: {
@@ -30,7 +42,7 @@ const fetchBlogPost = async (slug: string): Promise<BlogItem> => {
     "fields.slug[match]": slug,
   };
   const queryResult = await client.getEntries(queryOptions);
-  return queryResult.items[0];
+  return queryResult.items[0] as unknown as BlogItem;
 };
 
 export default async function BlogPage(props: BlogPageProps) {
@@ -56,8 +68,8 @@ export default async function BlogPage(props: BlogPageProps) {
             day: "numeric",
           })}
         </p>
-        <div className="[&>p]:mb-8 [&>h2]:font-extrabold">
-          {documentToReactComponents(content)}
+        <div className="prose [&>p]:mb-8 [&>h2]:text-[#454360] [&>h3]:text-[#454360]  prose-p:text-[#454360] prose-a:text-[#454360]  hover:prose-a:text-[#ff4656d1] dark:prose-p:text-[#b6b6cc] dark:[&>h2]:text-[#b6b6cc] dark:[&>h3]:text-[#b6b6cc] dark:prose-a:text-[#b6b6cc]">
+          {documentToReactComponents(content, options)}
         </div>
       </article>
     </main>
