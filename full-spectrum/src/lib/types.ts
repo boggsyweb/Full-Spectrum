@@ -35,7 +35,6 @@ export type BlogItem = {
         };
       };
     };
-    preview: string;
     tags: string[];
   };
 };

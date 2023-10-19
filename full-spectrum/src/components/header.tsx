@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { contentfulClient } from "@/lib/createClient";
 import { PageQueryResult } from "@/lib/types";
-import { fetchAssetUrl } from "@/app/functions/assetURL";
+import { fetchAssetUrl } from "@/functions/assetURL";
 
 const client = contentfulClient;
 
@@ -26,12 +26,12 @@ export default async function Header() {
       <h1 className="my-4 text-4xl font-extrabold text-center">The Full-Spectrum Coder</h1>
       </div>
       <nav className="bg-white dark:bg-[#201C35] w-full text-center p-4 my-4 rounded-sm shadow-[4px_4px_5px_0px_rgba(0,0,0,0.1)] dark:shadow-[5px_5px_5px_0px_rgba(0,0,0,0.3)]">
-        <Link className="text-lg mx-6" href="/">Home</Link>
+        <Link className="text-lg mx-6 hover:underline decoration-[#ff4656d1]" href="/">Home</Link>
         {PageEntries.items.map((singlePost) => {
           const { slug, linkName } = singlePost.fields;
           return (
             <span key={slug}>
-              <Link className="text-lg mx-6" href={`/pages/${slug}`}>{linkName}</Link>
+              <Link className="text-lg mx-6 hover:underline decoration-[#ff4656d1]" href={`/pages/${slug}`}>{linkName}</Link>
             </span>
           );
         })}

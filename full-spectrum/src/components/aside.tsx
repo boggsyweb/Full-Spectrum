@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BlogQueryResult } from "../lib/types";
 import { contentfulClient } from "@/lib/createClient";
-import { renderTags, getAllTags } from "@/app/functions/tagFunction";
+import { renderTags, getAllTags } from "@/functions/tagFunction";
 
 const client = contentfulClient;
 
@@ -16,7 +16,7 @@ const getBlogEntries = async (): Promise<BlogQueryResult> => {
     const allTags = getAllTags(blogEntries.items);
     return (
         <div>
-        <div className="sticky top-0 hidden md:flex min-h-screen flex-col py-12 gap-y-8">
+        <div className="flex-col py-12 gap-y-8 md:sticky md:top-0 md:flex md:min-h-screen  ">
           <span className="flex content-between items-center gap-3">
             <h3 className="text-xl font-bold">Recent Posts</h3>
             <hr className="border-[#ff46569d] border-2 w-full"/>
@@ -27,13 +27,13 @@ const getBlogEntries = async (): Promise<BlogQueryResult> => {
                 <div key={slug}>
                      <Link className="group flex justify-center items-center" href={`/articles/${slug}`}>
                     <span className="w-1/4">
-                        <img className="rounded-sm"
+                        <img className="rounded-sm mb-1"
                              src={`https:${image.fields.file.url}`}
                             alt={title}
                         />
                     </span>
                     <span className="w-3/4 ml-4">
-                        <h4 className="font-bold text-md text-left underline decoration-transparent transition-colors duration-300 hover:decoration-[#ff46569d]">
+                        <h4 className="truncate overflow-hidden font-bold text-md text-left underline decoration-transparent transition-colors duration-300 hover:decoration-[#ff46569d] md:whitespace-normal">
                         {title}
                         </h4>
                         <span className="flex gap-1">

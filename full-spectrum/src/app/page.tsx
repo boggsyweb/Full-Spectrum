@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { BlogQueryResult } from "../lib/types";
 import { contentfulClient } from "@/lib/createClient";
-import { renderTags } from "./functions/tagFunction";
+import { renderTags } from "../functions/tagFunction";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const client = contentfulClient;
 
@@ -15,9 +16,9 @@ export default async function Home() {
   return (
     <main className="flex items-center min-h-screen flex-col py-12 gap-y-12">
       {blogEntries.items.map((singlePost) => {
-        const { slug, title, date, image, preview, tags, readTime } = singlePost.fields;
+        const { slug, title, content, date, image, tags, readTime } = singlePost.fields;
         return (
-          <div className="flex flex-col items-center leading-loose bg-white dark:bg-[#201C35] p-6 md:p-10 rounded-sm shadow-[4px_4px_5px_0px_rgba(0,0,0,0.1)] dark:shadow-[5px_5px_5px_0px_rgba(0,0,0,0.3)] sm:w-3/4">
+          <div className="flex flex-col items-center leading-loose bg-white dark:bg-[#201C35] p-6 md:p-10 rounded-sm shadow-[4px_4px_5px_0px_rgba(0,0,0,0.1)] dark:shadow-[5px_5px_5px_0px_rgba(0,0,0,0.3)] sm:w-4/5">
               <span className="grid md:grid-cols-[1fr_4fr] gap-6 mb-6">
             <img className="rounded-sm mb-1"
                 src={`https:${image.fields.file.url}`}
@@ -43,7 +44,7 @@ export default async function Home() {
                   </span>
               </span>
               </span>
-              <p className="opacity-70">{preview}</p>
+              <div className=" max-h-32 overflow-hidden">{documentToReactComponents(content)}</div>
               <Link className="group" href={`/articles/${slug}`}>
             <div className="w-32 my-0 mx-auto translate-y-14 bg-[#4A4870] text-slate-50 font-semibold text-center py-2 rounded-sm shadow-[4px_4px_5px_0px_rgba(0,0,0,0.1)] hover:shadow-[3px_3px_0px_1px_#ff4656c5] dark:shadow-[3px_3px_0px_1px_rgba(0,0,0,0.3)] transition-shadow duration-200" key={slug}>Read More
             </div>
