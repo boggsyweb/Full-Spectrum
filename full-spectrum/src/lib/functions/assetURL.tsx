@@ -1,4 +1,4 @@
-import { contentfulClient } from "@/lib/createClient";
+import { contentfulClient } from "@/lib/functions/createClient";
 
 const client = contentfulClient
 

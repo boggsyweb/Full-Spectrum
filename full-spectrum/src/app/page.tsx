@@ -1,8 +1,8 @@
 // Home page
 import Link from "next/link";
 import { BlogQueryResult } from "../lib/types";
-import { contentfulClient } from "@/lib/createClient";
-import { renderTags } from "../functions/tagFunction";
+import { contentfulClient } from "@/lib/functions/createClient";
+import { renderTags } from "../lib/functions/tagFunction";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 const client = contentfulClient;
@@ -11,8 +11,11 @@ const client = contentfulClient;
   const entries = await client.getEntries({ content_type: "blog", order: ['-fields.date'], include: 1 });
   return entries as unknown as BlogQueryResult;
 };
+
+
 export default async function Home() {
   const blogEntries = await getBlogEntries();
+  
   return (
     <main className="flex items-center min-h-screen flex-col py-12 gap-y-12">
       {blogEntries.items.map((singlePost) => {
@@ -31,7 +34,7 @@ export default async function Home() {
               </h2>
               </Link>
                 <span className="flex flex-col  items-center sm:flex-row">
-                  <span className="flex gap-2">{renderTags(tags)}</span>
+                  <span className="flex gap-2">{renderTags(tags)}</span> 
                   <p className="sm:mx-10">{readTime} read</p>
                   <span className="font-semibold  opacity-70">
                 {" "}

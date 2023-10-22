@@ -1,7 +1,7 @@
 // Blog post
 import { BlogItem } from "@/lib/types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { contentfulClient } from "@/lib/createClient";
+import { contentfulClient } from "@/lib/functions/createClient";
 
 const client = contentfulClient;
 
